@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Huawei.WebUIMailValidate", "Huawei.WebUIMailValidate\Huawei.WebUIMailValidate.csproj", "{2409C143-2607-45F6-8F69-4E8FBD3E8845}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Huawei.RabbitMqSubscriberService", "Huawei.FileCreateWorkerService\Huawei.RabbitMqSubscriberService.csproj", "{FA07C411-E1D8-48D7-9A29-4B648C5701FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2409C143-2607-45F6-8F69-4E8FBD3E8845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2409C143-2607-45F6-8F69-4E8FBD3E8845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2409C143-2607-45F6-8F69-4E8FBD3E8845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2409C143-2607-45F6-8F69-4E8FBD3E8845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA07C411-E1D8-48D7-9A29-4B648C5701FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA07C411-E1D8-48D7-9A29-4B648C5701FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA07C411-E1D8-48D7-9A29-4B648C5701FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA07C411-E1D8-48D7-9A29-4B648C5701FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BC7EA62-9602-486A-A82E-F555B083A90F}
+	EndGlobalSection
+EndGlobal

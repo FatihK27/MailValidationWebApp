@@ -1,0 +1,64 @@
+﻿@model Huawei.WebUIMailValidate.SharedModels.ValidationResult
+@{
+    ViewData["Title"] = "SingleValidation";
+}
+
+<h1>Validate Email Address</h1>
+
+<form id="mailForm">
+    <div class="input-group mb-3 container col-4">
+        <input type="email" name="mailAddress" class="form-control" placeholder="Mail Adresi" required>
+        <div class="input-group-append">
+            @*<button class="btn btn-success" type="submit"onclick="showResult()">Sorgula</button>*@
+            <button class="btn btn-success" type="submit">Sorgula</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("#mailForm").submit(function (e) {
+                e.preventDefault();
+
+                var formData = new FormData($("#mailForm")[0]);
+
+                $.ajax({
+                    url: "/MailValidation/GetSingleValidation",
+                    type: 'POST',
+                    data: $("#mailForm").serialize(),
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.isSuccessful == true) {
+                            Swal.fire({
+                                title: response.status ? 'Doğrulama Tamamlandı!' : 'Doğrulama Tamamlanamadı!',
+                                html: response.message,
+                                position: 'center',
+                                icon: response.status ? 'success' : 'error',
+                                showConfirmButton: true
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Hata!',
+                                text: "Mail doğrulama sunucusuna bağlanılamadı!",
+                                position: 'center',
+                                icon: 'error',
+                                showConfirmButton: true
+                            }); 
+                        }
+                    },
+                    error: function (response) {
+                        Swal.fire({
+                            title: 'Hata!',
+                            text: "Mail doğrulama sunucusuna bağlanılamadı!",
+                            position: 'center',
+                            icon: 'error',
+                            showConfirmButton: true
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

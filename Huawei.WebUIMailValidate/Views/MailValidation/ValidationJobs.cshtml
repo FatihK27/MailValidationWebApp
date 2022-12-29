@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Doğrulama Geçmişi";
+}
+@model List<Huawei.WebUIMailValidate.Models.Validation>
+
+@*@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+
+            var hasStartFileUpload = '@TempData["StartCreatingExcel"]';
+
+            if (hasStartFileUpload) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Dosya oluşturma işlemi başlamıştır. Bittiğinde bildiri alacaksınız.',
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            }
+        })
+    </script>
+}*@
+
+<table class="datatable table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 20%;">Toplu İş Numarası</th>
+            <th>Eposta Adresi</th>
+            <th>Doğrulama Durumu</th>
+            <th>Açıklama</th>
+            <th>İstek Tarihi</th>
+            <th>Tamamlanma Tarihi</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.BatchId</td>
+            <td>@item.mailAddress</td>
+            <td>@item.Result</td>
+            <td>@item.ResultDescription</td>
+            <td>@item.RequestDate</td>
+            <td>@item.ResultDate</td>
+        </tr>
+    }
+</table>

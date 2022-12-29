@@ -1,0 +1,42 @@
+﻿@model CsvRecord
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Validate Email Addresses</h1>
+
+
+
+<form asp-controller="MailValidation" asp-action="UploadCsv" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Dosya Seçin:</label>
+        <input type="file" 
+               class="form-control-file" 
+               id="file"
+               accept=".csv"
+               name="file" 
+               style="width: 290px; display: inline-block; margin-left: 10px;">
+    </div>
+    <button type="submit" class="btn btn-primary" style="display: inline-block; width: 200px;">
+        Dosyayı Yükle
+    </button>
+</form>
+
+@section Scripts
+    {
+       <script>
+           $(document).ready(function () {
+           var HasFileUploaded = '@TempData["FileUpload"]';
+            if (HasFileUploaded) {
+               Swal.fire({
+                       position: 'center',
+                       icon: 'success',
+                       title: 'Dosya yükleme başarıyla tamamlandı!',
+                       showConfirmButton: false,
+                      timer:2500
+                   })
+               }
+           })
+       </script>
+}
