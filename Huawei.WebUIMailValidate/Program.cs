@@ -22,6 +22,7 @@ namespace Huawei.WebUIMailValidate
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             using (var scope = host.Services.CreateScope())
             {
+                //UseUrls("http://localhost:5003", "https://localhost:5004";
                 var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 appDbContext.Database.Migrate();

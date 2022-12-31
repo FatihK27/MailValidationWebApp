@@ -42,7 +42,7 @@ namespace Huawei.WebUIMailValidate.Controllers
             return View(await _context.Validation.Where(x => x.userID == user.Id).OrderByDescending(x => x.RequestDate).ToListAsync());
         }
 
-        public IActionResult Index()
+        public IActionResult UploadCsv()
         {
             return View();
         }
@@ -79,42 +79,65 @@ namespace Huawei.WebUIMailValidate.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UploadCsvAsync(IFormFile file)
+        public async Task<IActionResult> UploadCsvFile(IFormFile file)
         {
-            if (file != null)
+            try
             {
-                if (file is not { Length: > 0 }) return BadRequest();
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                string path = Path.Combine(this.Environment.WebRootPath, "Uploads");
-                if (!Directory.Exists(path))
+                if (file != null)
                 {
-                    Directory.CreateDirectory(path);
-                }
-                Guid batchId = Guid.NewGuid();
-                string fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + batchId.ToString() + ".csv";
-                string filePath = Path.Combine(path, fileName);
-                using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-                using (var reader = new StreamReader(file.OpenReadStream()))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    var records = csv.GetRecords<CsvRecord>().ToList();
-                    foreach (var record in records)
+                    if (file is not { Length: > 0 }) return BadRequest();
+                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                    //using (StreamReader csvReader = new StreamReader(file.InputStream))
+                    //{
+                    //    while (!csvReader.EndOfStream)
+                    //    {
+                    //        var line = csvReader.ReadLine();
+                    //        var values = line.Split(';');
+                    //    }
+                    //}
+
+
+
+                    //string path = Path.Combine(this.Environment.WebRootPath, "Uploads");
+                    //if (!Directory.Exists(path))
+                    //{
+                    //    Directory.CreateDirectory(path);
+                    //}
+                    Guid batchId = Guid.NewGuid();
+                    //string fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + batchId.ToString() + ".csv";
+                    //string filePath = Path.Combine(path, fileName);
+                    //using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    //{
+                    //    file.CopyTo(stream);
+                    //}
+                    using (var reader = new StreamReader(file.OpenReadStream()))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
-                        _rabbitMQPublisher.Publish(new Validation() 
-                        { userID = user.Id,
-                          mailAddress=record.mailAddress,
-                          BatchId=batchId,
-                          RequestDate=DateTime.Now.ToUniversalTime(),
-                        });
+                        var records = csv.GetRecords<CsvRecord>().ToList();
+                        foreach (var record in records)
+                        {
+                            _rabbitMQPublisher.Publish(new Validation()
+                            {
+                                userID = user.Id,
+                                mailAddress = record.mailAddress,
+                                BatchId = batchId,
+                                RequestDate = DateTime.Now.ToUniversalTime(),
+                            });
+                        }
                     }
                 }
+                TempData["FileUpload"] = true;
             }
-            TempData["FileUpload"] = true;
+            catch (Exception ex)
+            {
 
-            return View("Index");
+                //Console.WriteLine(ex.ToString());
+            }
+
+
+            //return View("Index");
+            return View("UploadCsv");
         }
     }
 }

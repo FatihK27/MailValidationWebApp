@@ -1,12 +1,4 @@
-﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:14812",
-      "sslPort": 44321
-    }
-  },
+{
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
@@ -15,14 +7,31 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "UdemRabbitMQWeb.ExcelCreate": {
+    "Huawei.WebUIMailValidate": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "ASPNETCORE_DETAILED_ERRORS": "1"
+      },
+      "dotnetRunMessages": "true"
+    }
+  },
+  "Huawei.WebUIMailValidate": {
+    "commandName": "Project",
+    "launchBrowser": true,
+    "environmentVariables": {
+      "ASPNETCORE_ENVIRONMENT": "Development",
+      "ASPNETCORE_DETAILED_ERRORS": "1"
+    },
+    "dotnetRunMessages": "true"
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:14812",
+      "sslPort": 44321
     }
   }
 }

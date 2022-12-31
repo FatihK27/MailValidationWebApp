@@ -3,6 +3,7 @@ using Huawei.RabbitMqSubscriberService.Services;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 using Serilog;
+using System.Net;
 
 namespace Huawei.RabbitMqSubscriberService
 {
@@ -57,7 +58,15 @@ namespace Huawei.RabbitMqSubscriberService
                         options.UseNpgsql(Configuration.GetConnectionString("Postgres")).EnableSensitiveDataLogging();
                     });
                     services.AddSingleton<RabbitMQClientService>();
-                    services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")), DispatchConsumersAsync = true });
+                    string password = hostContext.Configuration.GetValue<string>("RabbitMq:pass");
+                    string encodedPassword = WebUtility.UrlEncode(password);
+                    string hostname = hostContext.Configuration.GetValue<string>("RabbitMq:ServiceUrl");
+                    string username = hostContext.Configuration.GetValue<string>("RabbitMq:user");
+                    int port = 5672;
+                    string uristring = $"amqp://{username}:{encodedPassword}@{hostname}:{port}/";
+
+                    //services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")), DispatchConsumersAsync = true });
+                    services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(uristring), DispatchConsumersAsync = true });
                     services.AddHostedService<Worker>();
                 });
 
